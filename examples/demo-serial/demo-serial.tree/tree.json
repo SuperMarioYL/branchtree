@@ -1,0 +1,482 @@
+{
+  "name": "demo-serial",
+  "next_id": 34,
+  "nodes": {
+    "ch1": {
+      "id": "ch1",
+      "parent_id": null,
+      "branch": "main",
+      "text": "林晚从噩梦中惊醒，左手腕上那道旧疤隐隐作痛。她恨哥哥，恨他当年将自己推下楼梯，也恨他此后再未出现。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 49
+      }
+    },
+    "ch2": {
+      "id": "ch2",
+      "parent_id": "ch1",
+      "branch": "main",
+      "text": "清晨的长安城朱雀大街上人来人往。林晚裹紧斗篷，混入早市的人流中。她要找到周远，那个唯一知道真相的捕快。",
+      "extracted_state": {
+        "characters": [
+          "林晚",
+          "周远"
+        ],
+        "summary": "",
+        "word_count": 51
+      }
+    },
+    "ch3": {
+      "id": "ch3",
+      "parent_id": "ch2",
+      "branch": "main",
+      "text": "周远在衙门口当值，看见林晚便皱了眉。\"你哥哥的案子已经结了，\"他低声说，\"别再查了。\"林晚摇头：\"我只想要一个答案。\"",
+      "extracted_state": {
+        "characters": [
+          "林晚",
+          "周远"
+        ],
+        "summary": "",
+        "word_count": 59
+      }
+    },
+    "ch4": {
+      "id": "ch4",
+      "parent_id": "ch3",
+      "branch": "main",
+      "text": "林晚回到租住的小院，翻出父亲留下的旧匣。匣中一封信，字迹陌生，落款只有一个\"远\"字。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 42
+      }
+    },
+    "ch5": {
+      "id": "ch5",
+      "parent_id": "ch4",
+      "branch": "main",
+      "text": "夜里朱雀大街起了雾。林晚循着信上的线索，摸到城东一座废弃的酒坊。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 32
+      }
+    },
+    "ch6": {
+      "id": "ch6",
+      "parent_id": "ch5",
+      "branch": "main",
+      "text": "酒坊暗室中藏着账册，记着三年前一桩走私案的细节。林晚的手在发抖——上面有她哥哥的名字。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 43
+      }
+    },
+    "ch7": {
+      "id": "ch7",
+      "parent_id": "ch6",
+      "branch": "main",
+      "text": "周远找上门来：\"我查到你在找的东西了。但你哥哥……他可能不是你想的那样。\"",
+      "extracted_state": {
+        "characters": [
+          "周远"
+        ],
+        "summary": "",
+        "word_count": 37
+      }
+    },
+    "ch8": {
+      "id": "ch8",
+      "parent_id": "ch7",
+      "branch": "main",
+      "text": "林晚与周远对峙。周远说，她哥哥当年是卧底，推她下楼是为了护她周全。林晚不信。",
+      "extracted_state": {
+        "characters": [
+          "林晚",
+          "周远"
+        ],
+        "summary": "",
+        "word_count": 38
+      }
+    },
+    "ch9": {
+      "id": "ch9",
+      "parent_id": "ch8",
+      "branch": "main",
+      "text": "雨夜，林晚独自重访酒坊，却被黑衣人跟踪。她靠着对地形的熟悉甩掉了尾巴。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 35
+      }
+    },
+    "ch10": {
+      "id": "ch10",
+      "parent_id": "ch9",
+      "branch": "main",
+      "text": "林晚左手有疤处传来熟悉的刺痛——这是她紧张时的反应。她握紧拳头，决定深入调查。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 39
+      }
+    },
+    "ch11": {
+      "id": "ch11",
+      "parent_id": "ch10",
+      "branch": "main",
+      "text": "周远带来一份旧卷宗，上面盖着刑部的密印。林晚终于看到了哥哥最后一封密报的全文。",
+      "extracted_state": {
+        "characters": [
+          "林晚",
+          "周远"
+        ],
+        "summary": "",
+        "word_count": 39
+      }
+    },
+    "ch12": {
+      "id": "ch12",
+      "parent_id": "ch11",
+      "branch": "main",
+      "text": "密报指向一个她从未怀疑的人。林晚站在十字路口，是继续追查，还是就此收手？",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 36
+      }
+    },
+    "ch13": {
+      "id": "ch13",
+      "parent_id": "ch12",
+      "branch": "main",
+      "text": "林晚选择了继续。她恨哥哥的沉默，但更恨那个幕后之人。她要亲手揭开真相。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 35
+      }
+    },
+    "ch14": {
+      "id": "ch14",
+      "parent_id": "ch13",
+      "branch": "main",
+      "text": "追踪线索将林晚引向城西的黑市。她换上夜行衣，左手用布条缠紧遮住疤痕。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 34
+      }
+    },
+    "ch15": {
+      "id": "ch15",
+      "parent_id": "ch14",
+      "branch": "main",
+      "text": "黑市鱼龙混杂，林晚险些暴露身份。一个卖货的老妇认出了她手上的疤，惊呼出声。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 37
+      }
+    },
+    "ch16": {
+      "id": "ch16",
+      "parent_id": "ch15",
+      "branch": "main",
+      "text": "林晚及时捂住老妇的嘴，塞了一锭银子。老妇颤抖着指了指巷子深处的一扇铁门。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 36
+      }
+    },
+    "ch17": {
+      "id": "ch17",
+      "parent_id": "ch16",
+      "branch": "main",
+      "text": "铁门后是一间密室，里面堆着与酒坊相同的账册。林晚意识到，这是一张遍布长安的暗网。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 40
+      }
+    },
+    "ch18": {
+      "id": "ch18",
+      "parent_id": "ch17",
+      "branch": "main",
+      "text": "周远在巷口接应，脸色凝重：\"上面已经开始查你了。你得小心。\"林晚点头，眼中没有退缩。",
+      "extracted_state": {
+        "characters": [
+          "林晚",
+          "周远"
+        ],
+        "summary": "",
+        "word_count": 42
+      }
+    },
+    "ch19": {
+      "id": "ch19",
+      "parent_id": "ch18",
+      "branch": "main",
+      "text": "林晚回小院整理证据时，发现有人来过。桌上留了一张纸条：\"别再查，否则……\"",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 37
+      }
+    },
+    "ch20": {
+      "id": "ch20",
+      "parent_id": "ch19",
+      "branch": "main",
+      "text": "威胁没有吓退林晚。她反而更加确定，自己触碰到了要害。她恨哥哥留下的烂摊子，但她不会放弃。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 44
+      }
+    },
+    "ch21": {
+      "id": "ch21",
+      "parent_id": "ch20",
+      "branch": "main",
+      "text": "林晚与周远商定分工。周远走明面上的路子，林晚继续在暗处追查。",
+      "extracted_state": {
+        "characters": [
+          "林晚",
+          "周远"
+        ],
+        "summary": "",
+        "word_count": 30
+      }
+    },
+    "ch22": {
+      "id": "ch22",
+      "parent_id": "ch21",
+      "branch": "main",
+      "text": "通过账册上的暗号，林晚锁定了城北的一处宅院。那里住着一个自称茶叶商的中年人。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 38
+      }
+    },
+    "ch23": {
+      "id": "ch23",
+      "parent_id": "ch22",
+      "branch": "main",
+      "text": "林晚夜探宅院，在书房暗格中找到了一封写给哥哥的信。信上说\"事情已了，可收网\"。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 39
+      }
+    },
+    "ch24": {
+      "id": "ch24",
+      "parent_id": "ch23",
+      "branch": "main",
+      "text": "真相逐渐清晰：哥哥是被人设计害死的。林晚的恨意从哥哥转向了真正的仇人。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 35
+      }
+    },
+    "ch25": {
+      "id": "ch25",
+      "parent_id": "ch24",
+      "branch": "main",
+      "text": "周远带来了坏消息：那名茶叶商已经察觉，开始销毁证据。他们必须抢时间。",
+      "extracted_state": {
+        "characters": [
+          "周远"
+        ],
+        "summary": "",
+        "word_count": 34
+      }
+    },
+    "ch26": {
+      "id": "ch26",
+      "parent_id": "ch25",
+      "branch": "main",
+      "text": "林晚和周远联手，连夜将证据副本送往京城的旧识手中。这是最后的底牌。",
+      "extracted_state": {
+        "characters": [
+          "林晚",
+          "周远"
+        ],
+        "summary": "",
+        "word_count": 33
+      }
+    },
+    "ch27": {
+      "id": "ch27",
+      "parent_id": "ch26",
+      "branch": "main",
+      "text": "茶叶商派人围堵林晚。巷战中，林晚左手的疤被划开，鲜血直流，但她没有退。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 35
+      }
+    },
+    "ch28": {
+      "id": "ch28",
+      "parent_id": "ch27",
+      "branch": "main",
+      "text": "周远带兵赶到，制服了袭击者。林晚靠在墙上，喘着粗气，第一次觉得离哥哥近了一些。",
+      "extracted_state": {
+        "characters": [
+          "林晚",
+          "周远"
+        ],
+        "summary": "",
+        "word_count": 39
+      }
+    },
+    "ch29": {
+      "id": "ch29",
+      "parent_id": "ch28",
+      "branch": "main",
+      "text": "证据送达京城，上面派人下来彻查。长安城的暗网终于浮出水面。",
+      "extracted_state": {
+        "characters": [],
+        "summary": "",
+        "word_count": 29
+      }
+    },
+    "ch30": {
+      "id": "ch30",
+      "parent_id": "ch29",
+      "branch": "main",
+      "text": "尘埃落定。林晚站在哥哥的衣冠冢前，左手的疤已经结痂。她不再恨哥哥了——她终于懂了他的沉默。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 45
+      }
+    },
+    "ch31": {
+      "id": "ch31",
+      "parent_id": "ch12",
+      "branch": "alt-take",
+      "text": "林晚选择了收手。她把密报烧掉，决定不再追究。可那道手上的疤提醒她，有些事躲不掉。",
+      "extracted_state": {
+        "characters": [
+          "林晚"
+        ],
+        "summary": "",
+        "word_count": 40
+      }
+    },
+    "ch32": {
+      "id": "ch32",
+      "parent_id": "ch31",
+      "branch": "alt-take",
+      "text": "三天后，周远被发现死在朱雀大街的巷口。林晚的退缩换来了朋友的血。",
+      "extracted_state": {
+        "characters": [
+          "林晚",
+          "周远"
+        ],
+        "summary": "",
+        "word_count": 32
+      }
+    },
+    "ch33": {
+      "id": "ch33",
+      "parent_id": "ch32",
+      "branch": "alt-take",
+      "text": "林晚跪在周远身侧，左手的疤痛得她直不起腰。她终于明白，沉默才是最大的帮凶。",
+      "extracted_state": {
+        "characters": [
+          "林晚",
+          "周远"
+        ],
+        "summary": "",
+        "word_count": 37
+      }
+    }
+  },
+  "branches": {
+    "main": {
+      "name": "main",
+      "fork_point": "ch1",
+      "active_tip": "ch30"
+    },
+    "alt-take": {
+      "name": "alt-take",
+      "fork_point": "ch12",
+      "active_tip": "ch33"
+    }
+  },
+  "locks": [
+    {
+      "kind": "character",
+      "target": "林晚",
+      "pinned_facts": [
+        "左手有疤",
+        "恨哥哥"
+      ],
+      "scope": "tree"
+    },
+    {
+      "kind": "character",
+      "target": "周远",
+      "pinned_facts": [
+        "是捕快"
+      ],
+      "scope": "tree"
+    },
+    {
+      "kind": "setting",
+      "target": "长安城",
+      "pinned_facts": [
+        "有朱雀大街"
+      ],
+      "scope": "tree"
+    }
+  ]
+}

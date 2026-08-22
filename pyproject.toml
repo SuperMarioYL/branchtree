@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "branchtree"
+version = "0.1.0"
+description = "把故事当树，不当纸 — 网文连载故事树 agent"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+authors = [{ name = "SuperMarioYL" }]
+keywords = ["web-novel", "fiction", "story-tree", "agent", "serial"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Text Processing :: General",
+]
+dependencies = [
+    "openai>=1.40",
+    "pydantic>=2.7",
+    "typer>=0.12",
+    "jinja2>=3.1",
+    "rich>=13.0",
+]
+
+[project.scripts]
+branchtree = "branchtree.cli:app"
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.urls]
+Homepage = "https://github.com/SuperMarioYL/branchtree"
+Issues = "https://github.com/SuperMarioYL/branchtree/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/branchtree"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
