@@ -43,3 +43,5 @@ _build_ctx*
 CLAUDE.md
 # Test benchmarks
 .benchmarks/
+_build_ctx.json
+.builder_prompt.md
