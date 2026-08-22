@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "name": "branchtree",
+  "github": "https://github.com/SuperMarioYL/branchtree",
+  "host": "branchtree.lei6393.com",
+  "lang": { "primary": "zh", "toggle": true },
+  "hero": {
+    "eyebrow": { "zh": "本地运行 · 跨章锁定 · 分支重绘", "en": "Local-first · Cross-chapter lock · Branchable takes" },
+    "headline": {
+      "zh": "把故事当树，\n不当纸。",
+      "en": "Your story is a tree,\nnot a flat page."
+    },
+    "sub": {
+      "zh": "网文连载写到 200 章，角色眼色和第 12 章矛盾了？BranchTree 把叙事状态落盘成可分叉的故事树——锁定角色事实，分支重绘支线 take，合并保留最佳版本，一致性跨百万字不崩。",
+      "en": "Writing 200 chapters and your character's eye color drifted from chapter 12? BranchTree persists narrative state as a forkable story tree — lock character facts, branch alternate takes, merge the winner, keep consistency across a million words."
+    },
+    "command": "uv tool install -e . && branchtree view",
+    "cta": { "zh": "快速开始", "en": "Get started" },
+    "ctaGithub": { "zh": "GitHub", "en": "GitHub" },
+    "scroll": { "zh": "了解更多", "en": "Learn more" }
+  },
+  "advantages": [
+    {
+      "title": { "zh": "分支重绘，不覆盖旧稿", "en": "Branch takes without overwriting" },
+      "body": {
+        "zh": "想试另一条支线？fork 一条分支，重写几章，旧版完整保留在树里。不满意一条命令退回——旧章节永远在。",
+        "en": "Want to try a different plotline? Fork a branch, rewrite a few chapters, the old version stays intact in the tree. One command rolls back — old chapters are always there."
+      },
+      "chips": ["› fork / merge / view", "› 一条命令退回", "› 旧稿永不丢失"]
+    },
+    {
+      "title": { "zh": "角色事实锁定，跨章不矛盾", "en": "Lock character facts across chapters" },
+      "body": {
+        "zh": "给角色的眼色、身高、伏笔下一条 lock——regenerate 时 lock 强制不可变。写到第 200 章，系统替你盯着第 12 章的设定不崩。",
+        "en": "Set a lock on a character's eye color, height, or foreshadowing — locks are immutable during regeneration. At chapter 200, the system guards the facts you set at chapter 12."
+      },
+      "chips": ["› lock add / lock list", "› 不可变约束", "› 一致性检查器"]
+    },
+    {
+      "title": { "zh": "一致性检查，读者抓不到 bug", "en": "Consistency check readers can't beat" },
+      "body": {
+        "zh": "写到哪崩到哪——一条命令扫全本，标出角色前后矛盾、伏笔遗忘、设定漂移。读者用「设定崩」弃书之前，你先修。",
+        "en": "Find contradictions before readers do — one command scans the whole book, flagging character inconsistencies, forgotten foreshadowing, and setting drift. Fix it before readers say 'worldbuilding broke.'"
+      },
+      "chips": ["› branchtree consistency", "› 角色矛盾检测", "› 伏笔追踪"]
+    },
+    {
+      "title": { "zh": "本地运行，接国产模型", "en": "Local-first, connects to CN models" },
+      "body": {
+        "zh": "单进程 CLI，无微服务、无 server 在跑。接 DeepSeek / 豆包 / Kimi 走 openai-compat 协议，你的稿子不离开本地。",
+        "en": "Single-process CLI, no microservices, no running server. Connects to DeepSeek / Doubao / Kimi via openai-compat — your drafts stay local."
+      },
+      "chips": ["› python 3.12", "› DeepSeek / 豆包 / Kimi", "› 数据不离本地"]
+    }
+  ],
+  "scene": { "kind": "mesh", "nodes": [] },
+  "cta": {
+    "headline": { "zh": "连载百万字，设定不崩", "en": "A million words, zero drift" },
+    "sub": { "zh": "把故事当树——分支、锁定、合并，跨章一致性由工程文件保证。", "en": "Treat your story as a tree — branch, lock, merge. Cross-chapter consistency guaranteed by engineering files." },
+    "button": { "zh": "开始用 BranchTree", "en": "Start with BranchTree" }
+  },
+  "footer": { "tag": { "zh": "MIT 开源 · 本地优先", "en": "MIT open source · local-first" } }
+}
