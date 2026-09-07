@@ -1,138 +1,125 @@
-<div align="right"><sub><b>English</b> | <a href="./README.md">简体中文</a></sub></div>
+[简体中文](README.md) | **English**
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/hero-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./assets/hero-light.svg">
-  <img src="./assets/hero-light.svg" width="880" alt="BranchTree — treat your story as a tree, not a sheet">
+  <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="assets/presentation/hero-mobile-dark.svg">
+  <source media="(max-width: 640px)" srcset="assets/presentation/hero-mobile-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/presentation/hero-dark.svg">
+  <img src="assets/presentation/hero-light.svg" width="960" alt="BranchTree — Keep more than one path for your story.">
 </picture>
 
-<p align="center"><sub>BranchTree is the branchable story-tree agent that locks cross-chapter consistency for serialized fiction writers. Runs locally.</sub></p>
+**BranchTree stores chapters, branches and character facts in a local story tree so you can try alternate continuations, retain old drafts and inspect explicit contradictions.**
 
-<p align="center">
-  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License"></a>
-  <a href="https://github.com/SuperMarioYL/branchtree/releases"><img src="https://img.shields.io/github/v/release/SuperMarioYL/branchtree" alt="Release"></a>
-  <a href="https://github.com/SuperMarioYL/branchtree/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/SuperMarioYL/branchtree/ci.yml?branch=main&label=CI" alt="CI"></a>
-  <img src="https://img.shields.io/badge/python-3.12%2B-blue" alt="Python">
-</p>
+`Python 3.12+` · [MIT](LICENSE) · [GitHub](https://github.com/SuperMarioYL/branchtree) · [Website](https://branchtree.lei6393.com)
 
-**At chapter 200 your character's eye color contradicts chapter 12? Treat the story as a tree — branch an alternate take, lock character facts, and consistency holds across the whole serial.**
+## Why it helps
 
-<h2><img src="https://api.iconify.design/tabler:topology-star-3.svg?color=%230071E3&width=24" height="22" align="absmiddle" alt=""> Architecture</h2>
+Changing a turning point need not overwrite every later draft. A story tree keeps chapter parent links separate from each branch’s active ending, letting the author compare continuations before promoting one to the main line. Fact locks provide references for the checker; they do not guarantee automatic consistency.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/atlas-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./assets/atlas-light.svg">
-  <img src="./assets/atlas-light.svg" width="880" alt="Architecture: CLI → Core → LLM Adapter / HTML Renderer">
+  <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="assets/presentation/process-mobile-dark.svg">
+  <source media="(max-width: 640px)" srcset="assets/presentation/process-mobile-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/presentation/process-dark.svg">
+  <img src="assets/presentation/process-light.svg" width="960" alt="Try and inspect an alternate continuation">
 </picture>
 
-A single-process CLI — no microservices, no running server. CLI (typer) calls Core (pydantic, pure logic), which owns the story tree, state, and consistency checker. The LLM adapter talks openai-compat endpoints (DeepSeek/Doubao/Kimi), and the renderer produces static HTML via jinja2.
+## Architecture
 
-## Table of Contents
+StoryTree in tree.py owns ChapterNode, Branch and Lock. add_chapter connects text to a parent and advances active_tip. state.py records text length and mentions of known character names. consistency.py checks a limited set of explicit Chinese negation patterns; render_html.py exports static HTML. Model regeneration and deep extraction in llm.py remain unimplemented.
 
-- [Why BranchTree](#why-branchtree)
-- [Install & Quickstart](#install--quickstart)
-- [Usage](#usage)
-- [Demo](#demo)
-- [Configuration](#configuration)
-- [Roadmap](#roadmap)
-- [Pricing](#pricing)
-- [License](#license)
+<picture>
+  <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="assets/presentation/architecture-mobile-dark.svg">
+  <source media="(max-width: 640px)" srcset="assets/presentation/architecture-mobile-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/presentation/architecture-dark.svg">
+  <img src="assets/presentation/architecture-light.svg" width="960" alt="Chapters, branches and fact records">
+</picture>
 
-## Why BranchTree
+## Install
 
-At 200,000 words a serialized author hits consistency collapse: a character's eye color in chapter 12 contradicts chapter 180; a foreshadow from chapter 30 is forgotten by chapter 200; readers cite "setting collapse" as their drop reason. Generic LLM chat has no persistent narrative state — every chapter means re-pasting context, and writing an alternate take overwrites the old version. BranchTree persists narrative state as a branchable project file: when you regenerate, locks enforce immutable facts, and consistency holds across a million words.
-
-<h2><img src="https://api.iconify.design/tabler:rocket.svg?color=%230071E3&width=24" height="22" align="absmiddle" alt=""> Install & Quickstart</h2>
+Requires Python 3.12+. Dependency installation may need network access; the tree operations and checks below do not call a model.
 
 ```bash
-git clone https://github.com/SuperMarioYL/branchtree.git && cd branchtree
-uv tool install -e .
-cd examples/demo-serial && branchtree view   # opens a 30-chapter tree view in your browser
+git clone https://github.com/SuperMarioYL/branchtree.git
+cd branchtree
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
 ```
 
-<details>
-<summary>Sample output</summary>
-
-```
-Rendered tree view → demo-serial.tree/tree.html
-Open in browser: file:///.../demo-serial.tree/tree.html
-```
-
-The browser shows 30 main-line chapters + a 3-chapter alt-take branch, plus character locks (Lin Wan: left-hand scar, hates her brother).
-
-</details>
-
-<h2><img src="https://api.iconify.design/tabler:terminal-2.svg?color=%230071E3&width=24" height="22" align="absmiddle" alt=""> Usage</h2>
-
-**Create a story tree and add chapters:**
+## Quickstart
 
 ```bash
-branchtree new myserial
-branchtree add --text "Chapter 1 Lin Wan opened her eyes; the old scar on her left hand ached."
-branchtree add --file ch02.txt
+python examples/presentation_demo.py
 ```
 
-**Lock character facts (immutable across regeneration):**
+The example creates three chapters, forks alternate from ch1, and says Lin Wan has no scar in ch3. The checker reports one contradiction with the pinned scar fact. After merging, main points to ch3 while ch1, ch2 and ch3 remain. JSON reload validates and static HTML is written; temporary files are removed afterward.
+
+## Usage
 
 ```bash
-branchtree lock add character:林晚 --facts "left-hand scar;hates her brother"
-branchtree lock list
+# Work in a separate story directory
+mkdir my-story
+cd my-story
+branchtree new serial
+branchtree lock add character:林晚 --facts "左手有疤"
+branchtree add --text "林晚醒来，左手有疤。"
+branchtree branch --from ch1 --name alternate
+branchtree add --text "林晚左手没有疤。" --branch alternate
+branchtree consistency
+branchtree view --no-browser
+branchtree merge --branch alternate --into main
 ```
 
-**Branch an alternate take and merge the best version:**
+merge relabels branch nodes, advances the destination tip and removes the branch record. It does not merge prose line by line or automatically reject contradictory chapters.
+
+## Capabilities and integrations
+
+| Input/output | Current support |
+|---|---|
+| Chapter text | --text or UTF-8 --file |
+| Persistence | <name>.tree/tree.json |
+| Character facts | lock add / lock list |
+| Reading view | Static HTML with optional browser opening |
+| Python | StoryTree, Lock and checker APIs |
+
+<picture>
+  <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="assets/presentation/integrations-mobile-dark.svg">
+  <source media="(max-width: 640px)" srcset="assets/presentation/integrations-mobile-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/presentation/integrations-dark.svg">
+  <img src="assets/presentation/integrations-light.svg" width="960" alt="Local writing inputs and outputs">
+</picture>
+
+## Configuration and limits
+
+The CLI loads the first name-sorted *.tree directory in its current directory, so keep one story tree per working directory. Locks default to tree scope and accept semicolon-separated facts.
+
+Consistency rules inspect chapters mentioning the target name and match limited negation fragments. They do not understand metaphor, motivation or a complete timeline; no finding is not proof that the text is correct. The consistency CLI currently reports violations without a nonzero exit status; automation should consume the Python checker’s Violation list.
+
+regenerate and deep state extraction still raise NotImplementedError. Configuring an endpoint or API key does not activate them.
+
+## Recorded demo
+
+v0.1.0 performs real tree operations, persistence and HTML export on three constructed chapters. A rule hit is not a proof of consistency for a whole novel.
+
+[Inputs, commands and complete output](docs/demo-results.json)
+
+[Retained terminal recording](assets/demo.gif) · [Recording script](docs/demo.tape). The replayable record above describes this example.
+
+## Roadmap
+
+- [x] Chapter trees, forks, branch promotion and JSON persistence.
+- [x] Fact-lock records, rule-based contradiction checks and static HTML.
+- [ ] Model-assisted regeneration and deep state extraction.
+- [ ] Cloud synchronization and collaboration.
+
+There is no hosted plan or purchase flow in this version; unimplemented items are directions only.
+
+## Development and license
 
 ```bash
-branchtree branch --from ch12 --name alt-take
-branchtree add --text "Lin Wan strikes first." --branch alt-take
-branchtree view                    # main line and alt-take shown side by side
-branchtree merge --branch alt-take --into main
+python -m pip install -e ".[dev]"
+python -m pytest
 ```
 
-**Cross-chapter consistency check:**
+See [tree.py](src/branchtree/tree.py) for the format and [consistency.py](src/branchtree/consistency.py) for rules.
 
-```bash
-branchtree consistency   # detects setting collapse, reports violation points
-```
-
-<h2><img src="https://api.iconify.design/tabler:photo.svg?color=%230071E3&width=24" height="22" align="absmiddle" alt=""> Demo</h2>
-
-![demo](assets/demo.gif)
-
-Running branch + merge + view on the 30-chapter demo serial — branch structure and lock status visualized in static HTML.
-
-<h2><img src="https://api.iconify.design/tabler:adjustments.svg?color=%230071E3&width=24" height="22" align="absmiddle" alt=""> Configuration</h2>
-
-LLM features (regenerate / deep state extraction, m2 milestone) are configured via environment variables:
-
-| Variable | Description | Default |
-|---|---|---|
-| `OPENAI_BASE_URL` | openai-compat endpoint (DeepSeek/Doubao/Kimi) | none |
-| `OPENAI_API_KEY` | API key | none |
-| `BRANCHTREE_MODEL` | Model name | `deepseek-chat` |
-
-m1 does not require an LLM — story-tree persistence, branching, merging, and the static HTML view all run locally.
-
-<h2><img src="https://api.iconify.design/tabler:map-2.svg?color=%230071E3&width=24" height="22" align="absmiddle" alt=""> Roadmap</h2>
-
-- [x] **m1 Story-tree primitive** — branchable story tree on disk + static HTML view (no LLM)
-- [ ] **m2 In-loop control** — regenerate-this-branch + lock-character consistency check, demoable on the 30-chapter serial
-- [ ] **m3 Install-and-go** — uv/pipx 10-minute install + bilingual README + demo GIF, reproducible by a stranger
-
-Future: hosted cloud sync (cross-device editing + million-word consistency graph), studio co-writing with shared branches/locks.
-
-<h2><img src="https://api.iconify.design/tabler:credit-card.svg?color=%230071E3&width=24" height="22" align="absmiddle" alt=""> Pricing</h2>
-
-v0.1 is entirely free, local, and open-source (MIT) — no paywall. Future hosted tiers:
-
-| Plan | Price | Features |
-|---|---|---|
-| Personal hosted | ¥19/mo | Cloud-synced story tree + cross-device editing + million-word consistency graph |
-| Studio | ¥99/mo/seat | Shared branch/lock co-writing, 5 seats minimum |
-
-Paid features launch after m3 ships and the 30-day kill-gate passes. The local OSS version stays free forever.
-
-## License
-
-[MIT](./LICENSE) © 2026 SuperMarioYL. Feel free to open bug reports or feature requests in [GitHub Issues](https://github.com/SuperMarioYL/branchtree/issues).
-
-<p align="center"><sub><a href="./LICENSE">MIT</a> © 2026 SuperMarioYL</sub></p>
+[MIT](LICENSE) · [Issues](https://github.com/SuperMarioYL/branchtree/issues)

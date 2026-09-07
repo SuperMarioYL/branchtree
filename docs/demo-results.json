@@ -1,0 +1,10 @@
+{
+  "version": "0.1.0",
+  "fixture": "Three constructed Chinese chapter texts with one explicit contradiction. Real local tree save/load and HTML export; no model calls.",
+  "steps": [
+    {
+      "command": "python3 examples/presentation_demo.py",
+      "output": "{\n  \"before_merge\": {\n    \"main\": \"ch2\",\n    \"alternate\": \"ch3\"\n  },\n  \"after_merge\": {\n    \"main\": \"ch3\"\n  },\n  \"retained_nodes\": [\n    \"ch1\",\n    \"ch2\",\n    \"ch3\"\n  ],\n  \"violations\": [\n    {\n      \"node_id\": \"ch3\",\n      \"lock_target\": \"林晚\",\n      \"kind\": \"character\",\n      \"detail\": \"pinned fact '左手有疤' contradicted in ch3\"\n    }\n  ],\n  \"valid_tree\": true,\n  \"html_written\": true\n}\n"
+    }
+  ]
+}

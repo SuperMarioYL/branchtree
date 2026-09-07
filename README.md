@@ -1,140 +1,125 @@
-<div align="right"><sub>[English](./README.en.md) | <b>简体中文</b></sub></div>
+[English](README.en.md) | **简体中文**
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/hero-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./assets/hero-light.svg">
-  <img src="./assets/hero-light.svg" width="880" alt="BranchTree — 把故事当树，不当纸">
+  <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="assets/presentation/hero-mobile-dark.svg">
+  <source media="(max-width: 640px)" srcset="assets/presentation/hero-mobile-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/presentation/hero-dark.svg">
+  <img src="assets/presentation/hero-light.svg" width="960" alt="BranchTree — Keep more than one path for your story.">
 </picture>
 
-<p align="center"><sub>BranchTree 是跨章锁定角色/设定一致性的网文连载故事树 agent，本地运行。</sub></p>
+**BranchTree 把章节、分支与角色事实保存在本地故事树中，让你尝试另一条支线、保留旧稿，并检查明显的事实矛盾。**
 
-<p align="center">
-  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License"></a>
-  <a href="https://github.com/SuperMarioYL/branchtree/releases"><img src="https://img.shields.io/github/v/release/SuperMarioYL/branchtree" alt="Release"></a>
-  <a href="https://github.com/SuperMarioYL/branchtree/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/SuperMarioYL/branchtree/ci.yml?branch=main&label=CI" alt="CI"></a>
-  <img src="https://img.shields.io/badge/python-3.12%2B-blue" alt="Python">
-</p>
+`Python 3.12+` · [MIT](LICENSE) · [GitHub](https://github.com/SuperMarioYL/branchtree) · [网站](https://branchtree.lei6393.com)
 
-**连载写到第 200 章，角色的眼色和第 12 章矛盾了？把故事当树——分支重绘支线，锁定角色事实，一致性跨章不崩。**
+## 为什么需要它
 
-<h2><img src="https://api.iconify.design/tabler:topology-star-3.svg?color=%230071E3&width=24" height="22" align="absmiddle" alt=""> 架构</h2>
+修改连载的某个转折时，新版本不必覆盖后续所有旧稿。故事树把章节之间的父子关系与每个分支的当前结尾分开保存，作者可以比较不同走向，再决定把哪一条提升为主线。事实锁为检查器提供具体参照，并不保证自动消除叙事矛盾。
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/atlas-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./assets/atlas-light.svg">
-  <img src="./assets/atlas-light.svg" width="880" alt="架构：CLI → Core → LLM 适配器 / HTML 渲染器">
+  <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="assets/presentation/process-mobile-dark.svg">
+  <source media="(max-width: 640px)" srcset="assets/presentation/process-mobile-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/presentation/process-dark.svg">
+  <img src="assets/presentation/process-light.svg" width="960" alt="Try and inspect an alternate continuation">
 </picture>
 
-单进程 CLI，无微服务、无运行中 server。CLI (typer) 调用 Core (pydantic 纯逻辑)，Core 负责故事树 / 状态 / 一致性检查器，LLM 适配器走 openai-compat 接 DeepSeek/豆包/Kimi，渲染器用 jinja2 生成静态 HTML。
+## 架构
 
-## 目录
+tree.py 的 StoryTree 保存 ChapterNode、Branch 和 Lock；add_chapter 用父节点连接正文，并更新 active_tip。state.py 仅记录文本长度和已知人物名称出现情况。consistency.py 检查有限的中文显式否定规则；render_html.py 将树渲染为静态 HTML。模型重写和深层抽取在 llm.py 中仍未实现。
 
-- [为什么需要 BranchTree](#为什么需要-branchtree)
-- [安装与快速开始](#安装与快速开始)
-- [用法](#用法)
-- [Demo](#demo)
-- [配置](#配置)
-- [路线图](#路线图)
-- [付费](#付费)
-- [协议](#协议)
+<picture>
+  <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="assets/presentation/architecture-mobile-dark.svg">
+  <source media="(max-width: 640px)" srcset="assets/presentation/architecture-mobile-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/presentation/architecture-dark.svg">
+  <img src="assets/presentation/architecture-light.svg" width="960" alt="Chapters, branches and fact records">
+</picture>
 
-## 为什么需要 BranchTree
+## 安装
 
-网文连载写到 200 章时，角色第 12 章的眼色和第 180 章矛盾；第 30 章的伏笔到第 200 章被遗忘；书评区读者用「设定崩」「人物前后矛盾」作为弃书理由。通用 LLM 聊天无持久叙事状态，跨章全靠手贴前文，多写一版就覆盖旧版。BranchTree 把叙事状态落盘成可分叉的工程文件——regenerate 时 lock 强制不可变，一致性跨百万字不崩。
-
-<h2><img src="https://api.iconify.design/tabler:rocket.svg?color=%230071E3&width=24" height="22" align="absmiddle" alt=""> 安装与快速开始</h2>
+需要 Python 3.12+。安装依赖可能联网，下面的树操作与检查不调用模型。
 
 ```bash
-git clone https://github.com/SuperMarioYL/branchtree.git && cd branchtree
-uv tool install -e .
-cd examples/demo-serial && branchtree view   # 浏览器打开 30 章树视图
+git clone https://github.com/SuperMarioYL/branchtree.git
+cd branchtree
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
 ```
 
-<details>
-<summary>查看示例输出</summary>
-
-```
-已渲染树视图 → demo-serial.tree/tree.html
-用浏览器打开: file:///.../demo-serial.tree/tree.html
-```
-
-浏览器中可看到主线 30 章 + alt-take 分支 3 章，以及角色锁（林晚：左手有疤、恨哥哥）。
-
-</details>
-
-> 国内用户可在 [Gitee 镜像](https://gitee.com/SuperMarioYL/branchtree) 克隆，速度更快。
-
-<h2><img src="https://api.iconify.design/tabler:terminal-2.svg?color=%230071E3&width=24" height="22" align="absmiddle" alt=""> 用法</h2>
-
-**创建故事树并追加章节：**
+## 快速开始
 
 ```bash
-branchtree new myserial
-branchtree add --text "第一章 林晚睁开眼，左手上的疤痕隐隐作痛。"
-branchtree add --file ch02.txt
+python examples/presentation_demo.py
 ```
 
-**锁定角色事实（跨重绘不可变）：**
+例子建立三章，从 ch1 分出 alternate，并在 ch3 写入“林晚左手没有疤”。检查器对锁定事实“左手有疤”报告一条矛盾。合并后 main 指向 ch3，但 ch1、ch2、ch3 均保留；JSON 重新加载有效，静态 HTML 成功写出。临时文件结束后清理。
+
+## 用法
 
 ```bash
-branchtree lock add character:林晚 --facts "左手有疤;恨哥哥"
-branchtree lock list
+# 在独立的故事工作目录中
+mkdir my-story
+cd my-story
+branchtree new serial
+branchtree lock add character:林晚 --facts "左手有疤"
+branchtree add --text "林晚醒来，左手有疤。"
+branchtree branch --from ch1 --name alternate
+branchtree add --text "林晚左手没有疤。" --branch alternate
+branchtree consistency
+branchtree view --no-browser
+branchtree merge --branch alternate --into main
 ```
 
-**分叉支线并合并最佳版本：**
+merge 将支线节点重新标为目标分支并移动目标 tip，随后删除支线记录；它不会做逐句文本合并，也不自动拒绝矛盾章节。
+
+## 能力与集成
+
+| 输入/输出 | 当前支持 |
+|---|---|
+| 章节正文 | --text 或 UTF-8 文件 --file |
+| 持久化 | <name>.tree/tree.json |
+| 人物事实 | lock add / lock list |
+| 阅读视图 | 静态 HTML；可关闭自动打开浏览器 |
+| Python | StoryTree、Lock 和检查器 API |
+
+<picture>
+  <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="assets/presentation/integrations-mobile-dark.svg">
+  <source media="(max-width: 640px)" srcset="assets/presentation/integrations-mobile-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/presentation/integrations-dark.svg">
+  <img src="assets/presentation/integrations-light.svg" width="960" alt="Local writing inputs and outputs">
+</picture>
+
+## 配置与边界
+
+CLI 在当前目录查找按名称排序的第一个 *.tree 目录，因此建议一个工作目录放一棵故事树。lock 的默认 scope 是 tree，事实使用分号分隔。
+
+一致性规则只检查包含目标人物名的章节，并匹配有限的否定片段。它不理解隐喻、人物动机或完整时间线；无违规输出不能证明全文正确。当前 consistency 即使报告违规也不会设置非零退出码；需要自动化时消费 Python 检查器返回的 Violation 列表。
+
+regenerate 和深层状态抽取仍抛出 NotImplementedError，配置模型端点或 API key 不能激活它们。
+
+## 运行记录
+
+v0.1.0 使用三章构造文本完成真实树操作、持久化与 HTML 导出。规则命中不是对整部小说一致性的证明。
+
+[输入、命令和完整输出](docs/demo-results.json)
+
+[保留的历史终端录屏](assets/demo.gif) · [录制脚本](docs/demo.tape)。本轮示例以以上可重放记录为准。
+
+## 路线图
+
+- [x] 章节树、分叉、支线提升和 JSON 保存。
+- [x] 事实锁记录、规则矛盾检查、静态 HTML。
+- [ ] 模型辅助重写与深层状态抽取。
+- [ ] 云同步与协作工作流。
+
+当前不提供托管套餐或购买入口；未实现功能只列为方向。
+
+## 开发与许可证
 
 ```bash
-branchtree branch --from ch12 --name alt-take
-branchtree add --text "林晚决定先动手。" --branch alt-take
-branchtree view                    # 主线 / alt-take 并列显示
-branchtree merge --branch alt-take --into main
+python -m pip install -e ".[dev]"
+python -m pytest
 ```
 
-**跨章一致性校验：**
+树格式见 [tree.py](src/branchtree/tree.py)，检查规则见 [consistency.py](src/branchtree/consistency.py)。
 
-```bash
-branchtree consistency   # 检测设定崩，报告违规点位
-```
-
-<h2><img src="https://api.iconify.design/tabler:photo.svg?color=%230071E3&width=24" height="22" align="absmiddle" alt=""> Demo</h2>
-
-![demo](assets/demo.gif)
-
-对 30 章 demo 连载执行 branch + merge + view，分支结构与锁定状态在静态 HTML 中可视化。
-
-<h2><img src="https://api.iconify.design/tabler:adjustments.svg?color=%230071E3&width=24" height="22" align="absmiddle" alt=""> 配置</h2>
-
-LLM 相关功能（regenerate / 深度状态抽取，m2 里程碑）通过环境变量配置：
-
-| 变量 | 说明 | 默认值 |
-|---|---|---|
-| `OPENAI_BASE_URL` | openai-compat 端点（DeepSeek/豆包/Kimi） | 无 |
-| `OPENAI_API_KEY` | API 密钥 | 无 |
-| `BRANCHTREE_MODEL` | 模型名称 | `deepseek-chat` |
-
-m1 不需要 LLM——故事树落盘、分支、合并、静态 HTML 视图全部本地运行。
-
-<h2><img src="https://api.iconify.design/tabler:map-2.svg?color=%230071E3&width=24" height="22" align="absmiddle" alt=""> 路线图</h2>
-
-- [x] **m1 故事树原语** — 可分叉故事树落盘 + 静态 HTML 视图（无 LLM）
-- [ ] **m2 循环内控制** — regenerate-this-branch + lock-character 一致性校验，对 30 章 demo 可演示
-- [ ] **m3 安装即用** — uv/pipx 10 分钟安装 + 双语 README + demo GIF，陌生人可复现
-
-未来：hosted 云同步（跨设备编辑 + 百万字级一致性图谱）、工作室协同分支/锁。
-
-<h2><img src="https://api.iconify.design/tabler:credit-card.svg?color=%230071E3&width=24" height="22" align="absmiddle" alt=""> 付费</h2>
-
-v0.1 完全免费、本地运行、开源（MIT），无任何付费墙。后续 hosted 版本规划：
-
-| 套餐 | 价格 | 功能 |
-|---|---|---|
-| 个人 hosted | ¥19/月 | 云同步故事树 + 跨设备续写 + 百万字级一致性图谱 |
-| 工作室 | ¥99/月/席位 | 共享分支/锁协同，5 席位起 |
-
-付费功能在 m3 上线 + 30 天 kill-gate 通过后启动。本地 OSS 版本永久免费。
-
-## 协议
-
-[MIT](./LICENSE) © 2026 SuperMarioYL。欢迎在 [GitHub Issues](https://github.com/SuperMarioYL/branchtree/issues) 提交 bug 或功能建议。
-
-<p align="center"><sub><a href="./LICENSE">MIT</a> © 2026 SuperMarioYL</sub></p>
+[MIT](LICENSE) · [Issues](https://github.com/SuperMarioYL/branchtree/issues)

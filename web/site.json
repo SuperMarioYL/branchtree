@@ -1,63 +1,229 @@
 {
-  "schema": 1,
-  "name": "branchtree",
+  "schema": 3,
+  "name": "BranchTree",
   "github": "https://github.com/SuperMarioYL/branchtree",
   "host": "branchtree.lei6393.com",
-  "lang": { "primary": "zh", "toggle": true },
+  "palette": "auto",
+  "lang": {
+    "primary": "zh",
+    "toggle": true
+  },
+  "meta": {
+    "visual_profile": "neon-particle",
+    "demo_source": "docs/demo-results.json",
+    "implementation_version": "0.1.0"
+  },
   "hero": {
-    "eyebrow": { "zh": "本地运行 · 跨章锁定 · 分支重绘", "en": "Local-first · Cross-chapter lock · Branchable takes" },
+    "eyebrow": {
+      "zh": "连载写作 · 本地故事树",
+      "en": "SERIAL FICTION · LOCAL STORY TREE"
+    },
     "headline": {
-      "zh": "把故事当树，\n不当纸。",
-      "en": "Your story is a tree,\nnot a flat page."
+      "zh": "支线可以重选，\n旧稿仍然留下。",
+      "en": "Choose another branch.\nKeep the earlier draft."
     },
     "sub": {
-      "zh": "网文连载写到 200 章，角色眼色和第 12 章矛盾了？BranchTree 把叙事状态落盘成可分叉的故事树——锁定角色事实，分支重绘支线 take，合并保留最佳版本，一致性跨百万字不崩。",
-      "en": "Writing 200 chapters and your character's eye color drifted from chapter 12? BranchTree persists narrative state as a forkable story tree — lock character facts, branch alternate takes, merge the winner, keep consistency across a million words."
+      "zh": "BranchTree 把章节、分支与角色事实保存在本地故事树中，让你尝试另一条支线、保留旧稿，并检查明显的事实矛盾。",
+      "en": "BranchTree stores chapters, branches and character facts in a local story tree so you can try alternate continuations, retain old drafts and inspect explicit contradictions."
     },
-    "command": "uv tool install -e . && branchtree view",
-    "cta": { "zh": "快速开始", "en": "Get started" },
-    "ctaGithub": { "zh": "GitHub", "en": "GitHub" },
-    "scroll": { "zh": "了解更多", "en": "Learn more" }
+    "href": "#quickstart",
+    "cta": {
+      "zh": "运行示例",
+      "en": "Run the example"
+    },
+    "ctaGithub": {
+      "zh": "查看源码",
+      "en": "View source"
+    }
+  },
+  "scene": {
+    "kind": "neon-graph",
+    "fallback": "/assets/presentation/scene-dark.svg",
+    "fallbackLight": "/assets/presentation/scene-light.svg",
+    "caption": {
+      "zh": "为故事保留不止一种走向",
+      "en": "Keep more than one path for your story."
+    }
   },
   "advantages": [
     {
-      "title": { "zh": "分支重绘，不覆盖旧稿", "en": "Branch takes without overwriting" },
-      "body": {
-        "zh": "想试另一条支线？fork 一条分支，重写几章，旧版完整保留在树里。不满意一条命令退回——旧章节永远在。",
-        "en": "Want to try a different plotline? Fork a branch, rewrite a few chapters, the old version stays intact in the tree. One command rolls back — old chapters are always there."
+      "title": {
+        "zh": "旧章节保留",
+        "en": "Retain earlier chapters"
       },
-      "chips": ["› fork / merge / view", "› 一条命令退回", "› 旧稿永不丢失"]
+      "body": {
+        "zh": "支线提升改变分支标签和结尾，已有章节节点仍保存在树中。",
+        "en": "Promoting a branch changes labels and the active ending while retaining existing chapter nodes."
+      }
     },
     {
-      "title": { "zh": "角色事实锁定，跨章不矛盾", "en": "Lock character facts across chapters" },
-      "body": {
-        "zh": "给角色的眼色、身高、伏笔下一条 lock——regenerate 时 lock 强制不可变。写到第 200 章，系统替你盯着第 12 章的设定不崩。",
-        "en": "Set a lock on a character's eye color, height, or foreshadowing — locks are immutable during regeneration. At chapter 200, the system guards the facts you set at chapter 12."
+      "title": {
+        "zh": "用具体事实检查",
+        "en": "Check explicit facts"
       },
-      "chips": ["› lock add / lock list", "› 不可变约束", "› 一致性检查器"]
+      "body": {
+        "zh": "人物名和固定事实为规则检查器提供可定位的参照。",
+        "en": "Character names and pinned facts give the rule checker concrete references."
+      }
     },
     {
-      "title": { "zh": "一致性检查，读者抓不到 bug", "en": "Consistency check readers can't beat" },
-      "body": {
-        "zh": "写到哪崩到哪——一条命令扫全本，标出角色前后矛盾、伏笔遗忘、设定漂移。读者用「设定崩」弃书之前，你先修。",
-        "en": "Find contradictions before readers do — one command scans the whole book, flagging character inconsistencies, forgotten foreshadowing, and setting drift. Fix it before readers say 'worldbuilding broke.'"
+      "title": {
+        "zh": "离线查看结构",
+        "en": "View the structure locally"
       },
-      "chips": ["› branchtree consistency", "› 角色矛盾检测", "› 伏笔追踪"]
-    },
-    {
-      "title": { "zh": "本地运行，接国产模型", "en": "Local-first, connects to CN models" },
       "body": {
-        "zh": "单进程 CLI，无微服务、无 server 在跑。接 DeepSeek / 豆包 / Kimi 走 openai-compat 协议，你的稿子不离开本地。",
-        "en": "Single-process CLI, no microservices, no running server. Connects to DeepSeek / Doubao / Kimi via openai-compat — your drafts stay local."
-      },
-      "chips": ["› python 3.12", "› DeepSeek / 豆包 / Kimi", "› 数据不离本地"]
+        "zh": "JSON 保存结构，静态 HTML 展示分支与章节，无需运行模型服务。",
+        "en": "JSON stores the structure and static HTML presents branches and chapters without a model service."
+      }
     }
   ],
-  "scene": { "kind": "mesh", "nodes": [] },
-  "cta": {
-    "headline": { "zh": "连载百万字，设定不崩", "en": "A million words, zero drift" },
-    "sub": { "zh": "把故事当树——分支、锁定、合并，跨章一致性由工程文件保证。", "en": "Treat your story as a tree — branch, lock, merge. Cross-chapter consistency guaranteed by engineering files." },
-    "button": { "zh": "开始用 BranchTree", "en": "Start with BranchTree" }
+  "story": {
+    "intro": {
+      "title": {
+        "zh": "为故事保留不止一种走向",
+        "en": "Keep more than one path for your story."
+      },
+      "body": {
+        "zh": "修改连载的某个转折时，新版本不必覆盖后续所有旧稿。故事树把章节之间的父子关系与每个分支的当前结尾分开保存，作者可以比较不同走向，再决定把哪一条提升为主线。事实锁为检查器提供具体参照，并不保证自动消除叙事矛盾。",
+        "en": "Changing a turning point need not overwrite every later draft. A story tree keeps chapter parent links separate from each branch’s active ending, letting the author compare continuations before promoting one to the main line. Fact locks provide references for the checker; they do not guarantee automatic consistency."
+      }
+    },
+    "sections": [
+      {
+        "title": {
+          "zh": "从输入到结果",
+          "en": "From input to result"
+        },
+        "body": {
+          "zh": "例子建立三章，从 ch1 分出 alternate，并在 ch3 写入“林晚左手没有疤”。检查器对锁定事实“左手有疤”报告一条矛盾。合并后 main 指向 ch3，但 ch1、ch2、ch3 均保留；JSON 重新加载有效，静态 HTML 成功写出。临时文件结束后清理。",
+          "en": "The example creates three chapters, forks alternate from ch1, and says Lin Wan has no scar in ch3. The checker reports one contradiction with the pinned scar fact. After merging, main points to ch3 while ch1, ch2 and ch3 remain. JSON reload validates and static HTML is written; temporary files are removed afterward."
+        },
+        "image": {
+          "light": "/assets/presentation/process-light.svg",
+          "dark": "/assets/presentation/process-dark.svg",
+          "alt": {
+            "zh": "从输入到结果",
+            "en": "From input to result"
+          }
+        }
+      },
+      {
+        "title": {
+          "zh": "实现中的分工",
+          "en": "How the implementation fits together"
+        },
+        "body": {
+          "zh": "tree.py 的 StoryTree 保存 ChapterNode、Branch 和 Lock；add_chapter 用父节点连接正文，并更新 active_tip。state.py 仅记录文本长度和已知人物名称出现情况。consistency.py 检查有限的中文显式否定规则；render_html.py 将树渲染为静态 HTML。模型重写和深层抽取在 llm.py 中仍未实现。",
+          "en": "StoryTree in tree.py owns ChapterNode, Branch and Lock. add_chapter connects text to a parent and advances active_tip. state.py records text length and mentions of known character names. consistency.py checks a limited set of explicit Chinese negation patterns; render_html.py exports static HTML. Model regeneration and deep extraction in llm.py remain unimplemented."
+        },
+        "image": {
+          "light": "/assets/presentation/architecture-light.svg",
+          "dark": "/assets/presentation/architecture-dark.svg",
+          "alt": {
+            "zh": "实现中的分工",
+            "en": "How the implementation fits together"
+          }
+        }
+      },
+      {
+        "title": {
+          "zh": "接入现有工作流",
+          "en": "Connect existing workflows"
+        },
+        "body": {
+          "zh": "BranchTree 把章节、分支与角色事实保存在本地故事树中，让你尝试另一条支线、保留旧稿，并检查明显的事实矛盾。",
+          "en": "BranchTree stores chapters, branches and character facts in a local story tree so you can try alternate continuations, retain old drafts and inspect explicit contradictions."
+        },
+        "image": {
+          "light": "/assets/presentation/integrations-light.svg",
+          "dark": "/assets/presentation/integrations-dark.svg",
+          "alt": {
+            "zh": "接入现有工作流",
+            "en": "Connect existing workflows"
+          }
+        }
+      }
+    ],
+    "details": [
+      {
+        "title": {
+          "zh": "配置与边界",
+          "en": "Configuration and limits"
+        },
+        "body": {
+          "zh": "只实现本地树操作和有限规则检查，模型重写尚未实现。",
+          "en": "Only local tree operations and limited rule checks are implemented; model regeneration is not."
+        }
+      }
+    ]
   },
-  "footer": { "tag": { "zh": "MIT 开源 · 本地优先", "en": "MIT open source · local-first" } }
+  "demo": {
+    "title": {
+      "zh": "运行自带示例",
+      "en": "Run the supplied example"
+    },
+    "note": {
+      "zh": "v0.1.0 使用三章构造文本完成真实树操作、持久化与 HTML 导出。规则命中不是对整部小说一致性的证明。",
+      "en": "v0.1.0 performs real tree operations, persistence and HTML export on three constructed chapters. A rule hit is not a proof of consistency for a whole novel."
+    },
+    "source": "https://github.com/SuperMarioYL/branchtree/blob/main/docs/demo-results.json",
+    "steps": [
+      {
+        "label": {
+          "zh": "运行 1",
+          "en": "Run 1"
+        },
+        "body": {
+          "zh": "例子建立三章，从 ch1 分出 alternate，并在 ch3 写入“林晚左手没有疤”。检查器对锁定事实“左手有疤”报告一条矛盾。合并后 main 指向 ch3，但 ch1、ch2、ch3 均保留；JSON 重新加载有效，静态 HTML 成功写出。临时文件结束后清理。",
+          "en": "The example creates three chapters, forks alternate from ch1, and says Lin Wan has no scar in ch3. The checker reports one contradiction with the pinned scar fact. After merging, main points to ch3 while ch1, ch2 and ch3 remain. JSON reload validates and static HTML is written; temporary files are removed afterward."
+        },
+        "image": "/assets/presentation/demo-0-light.svg",
+        "imageDark": "/assets/presentation/demo-0-dark.svg",
+        "command": "python3 examples/presentation_demo.py",
+        "output": "{\n  \"before_merge\": {\n    \"main\": \"ch2\",\n    \"alternate\": \"ch3\"\n  },\n  \"after_merge\": {\n    \"main\": \"ch3\"\n  },\n  \"retained_nodes\": [\n    \"ch1\",\n    \"ch2\",\n    \"ch3\"\n  ],\n  \"violations\": [\n    {\n      \"node_id\": \"ch3\",\n      \"lock_target\": \"林晚\",\n      \"kind\": \"character\",\n      \"detail\": \"pinned fact '左手有疤' contradicted in ch3\"\n    }\n  ],\n  \"valid_tree\": true,\n  \"html_written\": true\n}\n"
+      }
+    ]
+  },
+  "quickstart": {
+    "title": {
+      "zh": "运行完整示例",
+      "en": "Run the complete example"
+    },
+    "body": {
+      "zh": "需要 Python 3.12+。安装依赖可能联网，下面的树操作与检查不调用模型。",
+      "en": "Requires Python 3.12+. Dependency installation may need network access; the tree operations and checks below do not call a model."
+    },
+    "steps": [
+      {
+        "title": {
+          "zh": "准备环境",
+          "en": "Prepare the environment"
+        },
+        "code": "git clone https://github.com/SuperMarioYL/branchtree.git\ncd branchtree\npython3 -m venv .venv\nsource .venv/bin/activate\npython -m pip install -e ."
+      },
+      {
+        "title": {
+          "zh": "运行本地示例",
+          "en": "Run the local example"
+        },
+        "code": "python examples/presentation_demo.py"
+      }
+    ]
+  },
+  "limitations": [
+    {
+      "zh": "只实现本地树操作和有限规则检查，模型重写尚未实现。",
+      "en": "Only local tree operations and limited rule checks are implemented; model regeneration is not."
+    },
+    {
+      "zh": "检查结果不是叙事一致性保证，合并不会自动执行检查或阻断矛盾。",
+      "en": "Checks do not guarantee narrative consistency; merging does not automatically check or block contradictions."
+    }
+  ],
+  "footer": {
+    "tag": {
+      "zh": "Python 3.12+ · MIT",
+      "en": "Python 3.12+ · MIT"
+    }
+  }
 }

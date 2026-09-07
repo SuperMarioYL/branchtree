@@ -1,0 +1,90 @@
+{
+  "name": "BranchTree",
+  "tagline": "Keep more than one path for your story.",
+  "architecture": {
+    "title": "Chapters, branches and fact records",
+    "nodes": [
+      {
+        "title": "Chapter text",
+        "detail": "UTF-8 file or direct text"
+      },
+      {
+        "title": "StoryTree",
+        "detail": "Nodes, parent links and tips"
+      },
+      {
+        "title": "Fact locks",
+        "detail": "Named targets and pinned facts"
+      },
+      {
+        "title": "Rule checker",
+        "detail": "Explicit contradiction list"
+      },
+      {
+        "title": "JSON / HTML",
+        "detail": "Save and inspect the tree"
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        4
+      ]
+    ]
+  },
+  "process": {
+    "title": "Try and inspect an alternate continuation",
+    "steps": [
+      {
+        "title": "Create chapters",
+        "detail": "main ends at ch2"
+      },
+      {
+        "title": "Fork at ch1",
+        "detail": "alternate ends at ch3"
+      },
+      {
+        "title": "Check the lock",
+        "detail": "One explicit contradiction"
+      },
+      {
+        "title": "Promote take",
+        "detail": "main → ch3; all nodes kept"
+      }
+    ],
+    "result": "Three local chapters; JSON reload and HTML export."
+  },
+  "integrations": {
+    "title": "Local writing inputs and outputs",
+    "items": [
+      {
+        "title": "UTF-8 text",
+        "detail": "Chapter input"
+      },
+      {
+        "title": "Python API",
+        "detail": "Tree and lock operations"
+      },
+      {
+        "title": "JSON",
+        "detail": "Persisted story tree"
+      },
+      {
+        "title": "Static HTML",
+        "detail": "Branch reading view"
+      }
+    ]
+  }
+}
