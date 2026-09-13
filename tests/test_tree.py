@@ -142,6 +142,35 @@ class TestValidate:
         assert set(kids) == {"ch4", "ch6"}
 
 
+class TestBranchPathCycle:
+    def test_cycle_raises_instead_of_hanging(self):
+        tree = _build_simple_tree()
+        # corrupt the alt-take chain: ch6 <-> ch7, excluding fork_point ch3
+        tree.nodes["ch6"].parent_id = "ch7"
+        tree.nodes["ch7"].parent_id = "ch6"
+        with pytest.raises(ValueError, match="cycle"):
+            tree.branch_path("alt-take")
+
+    def test_cycle_including_fork_point_also_raises(self):
+        tree = _build_simple_tree()
+        tree.nodes["ch3"].parent_id = "ch5"  # main chain loops back into ch3
+        with pytest.raises(ValueError, match="cycle"):
+            tree.branch_path("main")
+
+    def test_untouched_branches_still_traverse(self):
+        tree = _build_simple_tree()
+        tree.nodes["ch6"].parent_id = "ch7"
+        tree.nodes["ch7"].parent_id = "ch6"
+        # main is unaffected by the alt-take cycle
+        assert tree.branch_path("main") == ["ch1", "ch2", "ch3", "ch4", "ch5"]
+
+    def test_validate_detects_the_cycle(self):
+        tree = _build_simple_tree()
+        tree.nodes["ch6"].parent_id = "ch7"
+        tree.nodes["ch7"].parent_id = "ch6"
+        assert tree.validate() is False
+
+
 class TestPersistence:
     def test_save_and_load_roundtrip(self, tmp_path):
         tree = _build_simple_tree()

@@ -162,13 +162,25 @@ class StoryTree(BaseModel):
     # ------------------------------------------------------------------
 
     def branch_path(self, branch_name: str) -> list[str]:
-        """Return node ids from the branch's fork point to its active tip."""
+        """Return node ids from the branch's fork point to its active tip.
+
+        Raises ``ValueError`` if the parent chain contains a cycle — a
+        hand-edited or corrupted ``tree.json`` must fail loudly here, not
+        loop forever.
+        """
         if branch_name not in self.branches:
             raise ValueError(f"unknown branch '{branch_name}'")
         branch = self.branches[branch_name]
         path: list[str] = []
+        seen: set[str] = set()
         current: Optional[str] = branch.active_tip
         while current is not None and current in self.nodes:
+            if current in seen:
+                raise ValueError(
+                    f"cycle detected in parent chain at '{current}' "
+                    f"(branch '{branch_name}') — tree.json 已损坏"
+                )
+            seen.add(current)
             path.append(current)
             node = self.nodes[current]
             if current == branch.fork_point:
