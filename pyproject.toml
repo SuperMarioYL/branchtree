@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "branchtree"
-version = "0.1.0"
+version = "0.2.0"
 description = "把故事当树，不当纸 — 网文连载故事树 agent"
 readme = "README.md"
 license = "MIT"

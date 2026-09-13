@@ -336,3 +336,11 @@ class TestRegenerateCli:
         assert "unknown branch" in result.output
         assert fake.captured == []  # no LLM call was made
 
+
+class TestVersionFlag:
+    def test_version_flag_prints_and_exits_0(self):
+        result = runner.invoke(app, ["--version"], env=ENV)
+        assert result.exit_code == 0
+        assert "branchtree" in result.output
+        assert "0.2.0" in result.output
+

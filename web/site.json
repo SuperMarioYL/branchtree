@@ -11,7 +11,7 @@
   "meta": {
     "visual_profile": "neon-particle",
     "demo_source": "docs/demo-results.json",
-    "implementation_version": "0.1.0"
+    "implementation_version": "0.2.0"
   },
   "hero": {
     "eyebrow": {
@@ -117,8 +117,8 @@
           "en": "How the implementation fits together"
         },
         "body": {
-          "zh": "tree.py 的 StoryTree 保存 ChapterNode、Branch 和 Lock；add_chapter 用父节点连接正文，并更新 active_tip。state.py 仅记录文本长度和已知人物名称出现情况。consistency.py 检查有限的中文显式否定规则；render_html.py 将树渲染为静态 HTML。模型重写和深层抽取在 llm.py 中仍未实现。",
-          "en": "StoryTree in tree.py owns ChapterNode, Branch and Lock. add_chapter connects text to a parent and advances active_tip. state.py records text length and mentions of known character names. consistency.py checks a limited set of explicit Chinese negation patterns; render_html.py exports static HTML. Model regeneration and deep extraction in llm.py remain unimplemented."
+          "zh": "tree.py 的 StoryTree 保存 ChapterNode、Branch 和 Lock；add_chapter 用父节点连接正文，并更新 active_tip。state.py 记录文本长度和已知人物名称出现情况。consistency.py 检查有限的中文显式否定规则；render_html.py 将树渲染为静态 HTML。llm.py 通过 openai 兼容端点重绘支线 tip 并做锁定事实校验；深层抽取尚未实现。",
+          "en": "StoryTree in tree.py owns ChapterNode, Branch and Lock. add_chapter connects text to a parent and advances active_tip. state.py records text length and mentions of known character names. consistency.py checks a limited set of explicit Chinese negation patterns; render_html.py exports static HTML. llm.py rewrites a branch tip through an openai-compatible endpoint and verifies locked facts; deep extraction is not implemented."
         },
         "image": {
           "light": "/assets/presentation/architecture-light.svg",
@@ -163,8 +163,8 @@
           "en": "Configuration and limits"
         },
         "body": {
-          "zh": "只实现本地树操作和有限规则检查，模型重写尚未实现。",
-          "en": "Only local tree operations and limited rule checks are implemented; model regeneration is not."
+          "zh": "本地树操作与有限规则检查之外，regenerate 通过 openai 兼容端点重绘支线 tip；深层状态抽取尚未实现。",
+          "en": "Beyond local tree operations and limited rule checks, regenerate rewrites a branch tip through an openai-compatible endpoint; deep state extraction is not implemented."
         }
       }
     ]
@@ -175,8 +175,8 @@
       "en": "Run the supplied example"
     },
     "note": {
-      "zh": "v0.1.0 使用三章构造文本完成真实树操作、持久化与 HTML 导出。规则命中不是对整部小说一致性的证明。",
-      "en": "v0.1.0 performs real tree operations, persistence and HTML export on three constructed chapters. A rule hit is not a proof of consistency for a whole novel."
+      "zh": "v0.1.0 使用三章构造文本完成真实树操作、持久化与 HTML 导出。规则命中不是对整部小说一致性的证明。v0.2.0 起 consistency 以退出码 1 报告违规，regenerate 在锁定事实约束下重绘支线 tip。",
+      "en": "v0.1.0 performs real tree operations, persistence and HTML export on three constructed chapters. A rule hit is not a proof of consistency for a whole novel. As of v0.2.0 the consistency command reports findings with exit code 1, and regenerate rewrites a branch tip under locked facts."
     },
     "source": "https://github.com/SuperMarioYL/branchtree/blob/main/docs/demo-results.json",
     "steps": [
@@ -224,12 +224,12 @@
   },
   "limitations": [
     {
-      "zh": "只实现本地树操作和有限规则检查，模型重写尚未实现。",
-      "en": "Only local tree operations and limited rule checks are implemented; model regeneration is not."
+      "zh": "本地树操作与有限规则检查之外，regenerate 通过 openai 兼容端点重绘支线 tip；深层状态抽取尚未实现。",
+      "en": "Beyond local tree operations and limited rule checks, regenerate rewrites a branch tip through an openai-compatible endpoint; deep state extraction is not implemented."
     },
     {
-      "zh": "检查结果不是叙事一致性保证，合并不会自动执行检查或阻断矛盾。",
-      "en": "Checks do not guarantee narrative consistency; merging does not automatically check or block contradictions."
+      "zh": "检查结果不是叙事一致性保证，合并不会自动执行检查或阻断矛盾。regenerate 的写后校验沿用同一套有限规则。",
+      "en": "Checks do not guarantee narrative consistency; merging does not automatically check or block contradictions. The post-regeneration check applies the same limited rules."
     }
   ],
   "footer": {
