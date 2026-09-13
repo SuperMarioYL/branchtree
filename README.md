@@ -24,7 +24,7 @@
 
 ## 架构
 
-tree.py 的 StoryTree 保存 ChapterNode、Branch 和 Lock；add_chapter 用父节点连接正文，并更新 active_tip。state.py 仅记录文本长度和已知人物名称出现情况。consistency.py 检查有限的中文显式否定规则；render_html.py 将树渲染为静态 HTML。模型重写和深层抽取在 llm.py 中仍未实现。
+tree.py 的 StoryTree 保存 ChapterNode、Branch 和 Lock；add_chapter 用父节点连接正文，并更新 active_tip。state.py 仅记录文本长度和已知人物名称出现情况。consistency.py 检查有限的中文显式否定规则；render_html.py 将树渲染为静态 HTML。llm.py 通过 openai 兼容端点重绘支线 tip 并做锁定事实校验；深层状态抽取尚未实现。
 
 <picture>
   <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="assets/presentation/architecture-mobile-dark.svg">
@@ -71,6 +71,8 @@ branchtree merge --branch alternate --into main
 
 merge 将支线节点重新标为目标分支并移动目标 tip，随后删除支线记录；它不会做逐句文本合并，也不自动拒绝矛盾章节。
 
+`new` 拒绝覆盖已存在的同名故事树（退出码 1），确需重置时显式加 `--force`。
+
 ## 能力与集成
 
 | 输入/输出 | 当前支持 |
@@ -78,6 +80,7 @@ merge 将支线节点重新标为目标分支并移动目标 tip，随后删除�
 | 章节正文 | --text 或 UTF-8 文件 --file |
 | 持久化 | <name>.tree/tree.json |
 | 人物事实 | lock add / lock list |
+| 模型重绘 | regenerate（openai 兼容端点 + 锁定事实校验） |
 | 阅读视图 | 静态 HTML；可关闭自动打开浏览器 |
 | Python | StoryTree、Lock 和检查器 API |
 
@@ -92,9 +95,9 @@ merge 将支线节点重新标为目标分支并移动目标 tip，随后删除�
 
 CLI 在当前目录查找按名称排序的第一个 *.tree 目录，因此建议一个工作目录放一棵故事树。lock 的默认 scope 是 tree，事实使用分号分隔。
 
-一致性规则只检查包含目标人物名的章节，并匹配有限的否定片段。它不理解隐喻、人物动机或完整时间线；无违规输出不能证明全文正确。当前 consistency 即使报告违规也不会设置非零退出码；需要自动化时消费 Python 检查器返回的 Violation 列表。
+一致性规则只检查包含目标人物名的章节，并匹配有限的否定片段。它不理解隐喻、人物动机或完整时间线；无违规输出不能证明全文正确。v0.2.0 起 `consistency` 在检出违规时以退出码 1 结束（无违规为 0），脚本可以直接以退出码作门禁；Python 侧仍可消费检查器返回的 Violation 列表。
 
-regenerate 和深层状态抽取仍抛出 NotImplementedError，配置模型端点或 API key 不能激活它们。
+regenerate 已实现：通过 openai 兼容端点重绘支线 tip，配置 `OPENAI_BASE_URL` / `OPENAI_API_KEY`（或安装 openai 包）即可启用；写回前会用与 consistency 相同的有限规则校验锁定事实，显式违反锁定事实的输出会被拒绝且不落盘。写后校验同样不理解语义，深层状态抽取仍未实现。
 
 ## 运行记录
 
@@ -108,7 +111,8 @@ v0.1.0 使用三章构造文本完成真实树操作、持久化与 HTML 导出�
 
 - [x] 章节树、分叉、支线提升和 JSON 保存。
 - [x] 事实锁记录、规则矛盾检查、静态 HTML。
-- [ ] 模型辅助重写与深层状态抽取。
+- [x] 模型辅助重写（regenerate，锁校验拒绝违反锁定事实的输出）。
+- [ ] 深层状态抽取。
 - [ ] 云同步与协作工作流。
 
 当前不提供托管套餐或购买入口；未实现功能只列为方向。

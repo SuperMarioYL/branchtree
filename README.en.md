@@ -24,7 +24,7 @@ Changing a turning point need not overwrite every later draft. A story tree keep
 
 ## Architecture
 
-StoryTree in tree.py owns ChapterNode, Branch and Lock. add_chapter connects text to a parent and advances active_tip. state.py records text length and mentions of known character names. consistency.py checks a limited set of explicit Chinese negation patterns; render_html.py exports static HTML. Model regeneration and deep extraction in llm.py remain unimplemented.
+StoryTree in tree.py owns ChapterNode, Branch and Lock. add_chapter connects text to a parent and advances active_tip. state.py records text length and mentions of known character names. consistency.py checks a limited set of explicit Chinese negation patterns; render_html.py exports static HTML. llm.py rewrites a branch tip through an openai-compatible endpoint and verifies locked facts; deep extraction is not implemented.
 
 <picture>
   <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="assets/presentation/architecture-mobile-dark.svg">
@@ -71,6 +71,8 @@ branchtree merge --branch alternate --into main
 
 merge relabels branch nodes, advances the destination tip and removes the branch record. It does not merge prose line by line or automatically reject contradictory chapters.
 
+`new` refuses to overwrite an existing story tree (exit 1); pass `--force` when you really mean to reset it.
+
 ## Capabilities and integrations
 
 | Input/output | Current support |
@@ -78,6 +80,7 @@ merge relabels branch nodes, advances the destination tip and removes the branch
 | Chapter text | --text or UTF-8 --file |
 | Persistence | <name>.tree/tree.json |
 | Character facts | lock add / lock list |
+| Model rewrite | regenerate (openai-compatible endpoint + locked-fact check) |
 | Reading view | Static HTML with optional browser opening |
 | Python | StoryTree, Lock and checker APIs |
 
@@ -92,9 +95,9 @@ merge relabels branch nodes, advances the destination tip and removes the branch
 
 The CLI loads the first name-sorted *.tree directory in its current directory, so keep one story tree per working directory. Locks default to tree scope and accept semicolon-separated facts.
 
-Consistency rules inspect chapters mentioning the target name and match limited negation fragments. They do not understand metaphor, motivation or a complete timeline; no finding is not proof that the text is correct. The consistency CLI currently reports violations without a nonzero exit status; automation should consume the Python checker’s Violation list.
+Consistency rules inspect chapters mentioning the target name and match limited negation fragments. They do not understand metaphor, motivation or a complete timeline; no finding is not proof that the text is correct. As of v0.2.0 the consistency CLI exits 1 when violations are found (0 when clean), so scripts can gate on the exit status; the Python checker’s Violation list remains available.
 
-regenerate and deep state extraction still raise NotImplementedError. Configuring an endpoint or API key does not activate them.
+regenerate is implemented: it rewrites a branch tip through an openai-compatible endpoint — set `OPENAI_BASE_URL` / `OPENAI_API_KEY` (with the openai package installed) to activate it. Before writing back, the output is checked against locked facts with the same limited rules as consistency; an explicit contradiction is refused and nothing is written. The post-check does not understand semantics, and deep state extraction is still unimplemented.
 
 ## Recorded demo
 
@@ -108,7 +111,8 @@ v0.1.0 performs real tree operations, persistence and HTML export on three const
 
 - [x] Chapter trees, forks, branch promotion and JSON persistence.
 - [x] Fact-lock records, rule-based contradiction checks and static HTML.
-- [ ] Model-assisted regeneration and deep state extraction.
+- [x] Model-assisted regeneration (lock check refuses outputs that violate pinned facts).
+- [ ] Deep state extraction.
 - [ ] Cloud synchronization and collaboration.
 
 There is no hosted plan or purchase flow in this version; unimplemented items are directions only.
